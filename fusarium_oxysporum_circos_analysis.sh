@@ -40,7 +40,6 @@
 # ProgDir=/home/jconnell/git_repos/emr_repos/Fv_C-variants/Circos
 # sbatch $ProgDir/circos.sh $Conf $OutDir
 
-
 ####AJ520 vs AJ516
 ####Create synteny links for 520 vs 516 ideogram file 
 # Genome1=/home/jconnell/niab/fusarium/complete_nanopore_genomes/AJ516_2022/AJ516_2022_renamed.fasta
