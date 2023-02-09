@@ -20,7 +20,7 @@ export PATH="$PATH:/mnt/shared/scratch/jconnell/apps/USCS_tools/"
 
 
 
-WorkDir=/home/jconnell/projects/niab/fusarium/${SLURM_JOB_USER}_${SLURM_JOBID}_check_braker
+WorkDir=/mnt/shared/scratch/jconnell/braker_${SLURM_JOB_USER}_${SLURM_JOBID}
 Assembly=$1
 OutDir=$2
 AcceptedHits=$3
@@ -43,7 +43,7 @@ $braker \
   --AUGUSTUS_BIN_PATH=/mnt/shared/scratch/jconnell/apps/Augustus/bin \
   --AUGUSTUS_SCRIPTS_PATH=/mnt/shared/scratch/jconnell/apps/Augustus/scripts \
   --BAMTOOLS_PATH=/mnt/shared/scratch/jconnell/apps/bamtools/bin \
-  --GENEMARK_PATH=/home/jconnell/projects/niab/fusarium/software/genemark/gmes_linux_64 \
+  --GENEMARK_PATH=/mnt/shared/scratch/jconnell/genemark/gmes_linux_64_4 \
   --SAMTOOLS_PATH=/mnt/shared/scratch/jconnell/apps/samtools/bin \
   --PROTHINT_PATH=/mnt/shared/scratch/jconnell/apps/ProtHint/ProtHint-2.6.0/bin \
   --ALIGNMENT_TOOL_PATH=/home/jconnell/miniconda3/pkgs/spaln-2.4.7-pl5262h9a82719_0/bin \
@@ -58,10 +58,10 @@ $braker \
   --fungus \
   --gff3 \
   --softmasking on \
-  --species=AJ516_2022_Fusarium_rna \
+  --species=AJ516_2022_Fusarium_rna_att2 \
   --genome="assembly.fa" \
   --bam="alignedRNA.bam" \
-  --extrinsicCfgFile=/mnt/shared/scratch/jconnell/apps/Augustus/config/extrinsic/rnaseq.cfg
+  --extrinsicCfgFile=/mnt/shared/scratch/jconnell/apps/Augustus/config/extrinsic/rnaseq.cfg \
   --min_contig=10000
 
 #mkdir -p $CurDir/$OutDir

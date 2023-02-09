@@ -77,18 +77,18 @@
 
 #Run Braker
 
-# for file in AJ516_2022; do
-#  for Assembly in $(ls projects/niab/fusarium/complete_nanopore_genomes/$file/AJ516_2022.fasta); do
-#    Strain=$(echo $Assembly| rev | cut -d '/' -f2 | rev) # Edit to set your ouput directory
-#    Organism=$(echo $Assembly | rev | cut -d '/' -f4 | rev) # Edit to set your ouput directory
-#    OutDir=/home/jconnell/projects/niab/fusarium/rna_seq_data/re_annotation/braker/$file
-#    mkdir -p $OutDir
-#    AcceptedHits=niab/fusarium/rna_seq_data/STAR_pathogen_annotation_alignment/AJ516_2022/*.bam
-#    GeneModelName="$Organism"_"$Strain"_braker 
-#    ProgDir=git_repos/niab_repos/fusarium
-#    sbatch $ProgDir/braker_fungi.sh $Assembly $OutDir $AcceptedHits $GeneModelName
-#  done
-# done 
+for file in AJ516_2022; do
+ for Assembly in $(ls projects/niab/fusarium/complete_nanopore_genomes/$file/AJ516_2022.fasta); do
+   Strain=$(echo $Assembly| rev | cut -d '/' -f2 | rev) # Edit to set your ouput directory
+   Organism=$(echo $Assembly | rev | cut -d '/' -f4 | rev) # Edit to set your ouput directory
+   OutDir=/home/jconnell/projects/niab/fusarium/rna_seq_data/re_annotation/braker/$file
+   mkdir -p $OutDir
+   AcceptedHits=niab/fusarium/rna_seq_data/STAR_pathogen_annotation_alignment/AJ516_2022/*.bam
+   GeneModelName="$Organism"_"$Strain"_braker 
+   ProgDir=git_repos/niab_repos/fusarium_oxysporum 
+   sbatch $ProgDir/braker.sh $Assembly $OutDir $AcceptedHits $GeneModelName
+ done
+done 
 
 #Run codingquarry
 
