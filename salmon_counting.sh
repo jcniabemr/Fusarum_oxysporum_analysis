@@ -13,7 +13,7 @@ Transcriptome=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/fina
         echo $FileR
         OutDir=/home/jconnell/fusarium/salmon/$strain
         mkdir -p $OutDir
-        ProgDir=/home/jconnell/andrea_rna_seq/scripts
+        ProgDir=/home/jconnell/git_repos/niab_repos/fusarium_oxysporum
         sbatch $ProgDir/salmon.sh $Transcriptome $FileF $FileR $OutDir
     done
 done
