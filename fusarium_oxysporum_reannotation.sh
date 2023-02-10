@@ -107,13 +107,13 @@ done
 #Combine annotations 
 
 for strain in AJ516_2022; do
-for BrakerGff in $(ls /home/jconnell/fusarium/rna_seq_data/re_annotation/braker/$strain/augustus.hints.gff3); do
+for BrakerGff in $(ls /home/jconnell/jconnell/braker_jconnell_5835741/braker/augustus.hints.gff3); do
 Assembly=/home/jconnell/projects/niab/fusarium/complete_nanopore_genomes/$strain/AJ516_2022.fasta
 importgff=/home/jconnell/fusarium/rna_seq_data/re_annotation/CandidateEffectorGFFs/F._oxysporum_f._sp._lactucae_AJ516_CandidateEffector.gff
 CodingQuarryGff=/home/jconnell/fusarium/rna_seq_data/re_annotation/codingquarry/AJ516_2022/out/PredictedPass.gff3
 PGNGff=/home/jconnell/fusarium/rna_seq_data/re_annotation/codingquarry/AJ516_2022/out/PGN_predictedPass.gff3
 AddDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/combine_annotations 
-FinalDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/final_annotations
+FinalDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/final_annotations/mk2
 AddGenesList=$AddDir/additional_genes.txt
 AddGenesGff=$AddDir/additional_genes.gff
 FinalGff=$AddDir/combined_genes.gff
@@ -141,15 +141,15 @@ done
 
 
 for Strain in AJ516_2022; do
-for GffAppended in $(ls /home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/final_genes_appended.gff3); do
-  FinalDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/remove_dup_features
+for GffAppended in $(ls /home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/mk2/final_genes_appended.gff3); do
+  FinalDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/mk2/remove_dup_features
   mkdir -p $FinalDir
   # Remove duplicated genes
-  GffFiltered=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/remove_dup_features/filtered_duplicates.gff
+  GffFiltered=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/mk2/remove_dup_features/filtered_duplicates.gff
   ProgDir=/mnt/shared/scratch/agomez/apps/git_repos/bioinformatics_tools/Gene_prediction
   $ProgDir/remove_dup_features.py --inp_gff $GffAppended --out_gff $GffFiltered
   # Rename genes
-  GffRenamed=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/remove_dup_features/final_genes_appended_renamed.gff3
+  GffRenamed=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/mk2/remove_dup_features/final_genes_appended_renamed.gff3
   LogFile=/home/jconnell/projects/niab/fusarium/final_predictions/$Strain/final/added_annotations/final_genes_appended_renamed.log
   $ProgDir/gff_rename_genes.py --inp_gff $GffFiltered --conversion_log $LogFile > $GffRenamed
   rm $GffFiltered
