@@ -6,7 +6,7 @@
 
 #####Script to create kallisto index then pseudoalign and count transcipts 
 
-source /mnt/shared/scratch/jconnell/apps/miniconda3/bin/activate kallisto 
+source miniconda3/bin/activate kallisto 
 
 transcriptome=$1
 fread=$2
