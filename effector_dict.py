@@ -4,7 +4,6 @@
 
 #Import package
 import argparse
-from collections import defaultdict 
 
 #Parse files
 ap = argparse.ArgumentParser()
