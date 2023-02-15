@@ -38,6 +38,9 @@ for y in infile2:
     			if effectstop <= j[2]:
     				gene_dict[expressed_dict[j]].append("effector")
 
+empty_keys = [k for k,v in gene_dict.items() if not v]
+for k in empty_keys:
+    del gene_dict[k]
 
 for x in gene_dict:
     print (x, ":", gene_dict[x])

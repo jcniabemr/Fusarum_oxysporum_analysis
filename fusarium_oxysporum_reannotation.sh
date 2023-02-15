@@ -167,3 +167,8 @@ for x in $(cat AJ516_all_data.txt | cut -f1); do
     cat AJ516_genes | grep -w $x >> expressed_gene_db
 done  
 
+####Crete effector gene dict 
+python /home/jconnell/git_repos/niab_repos/fusarium_oxysporum/effector_dict.py \
+    -g expressed_gene_db \
+    -c F._oxysporum_f._sp._lactucae_AJ516_CandidateEffector.gff \
+    > effectors_in_expressed_gene.txt
