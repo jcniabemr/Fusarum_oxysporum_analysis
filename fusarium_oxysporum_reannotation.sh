@@ -160,3 +160,10 @@ for GffAppended in $(ls /home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516
   sed -i 's/\*/X/g' $FinalDir/final_genes_appended_renamed.pep.fasta
  done 
 done
+
+####Create gene effector dict
+
+for x in $(cat AJ516_all_data.txt | cut -f1); do
+    cat AJ516_genes | grep -w $x >> expressed_gene_db
+done  
+
