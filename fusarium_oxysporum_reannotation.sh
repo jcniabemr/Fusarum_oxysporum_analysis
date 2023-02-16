@@ -90,39 +90,64 @@
 # done
 
 ####AJ705 Race1
-for x in AJ520_2022; do 
+# for x in AJ520_2022; do 
+#     strain=$(basename ${x} _2022)
+#     Assembly=/home/jconnell/niab/fusarium/complete_nanopore_genomes/${x}/"$strain"_2022.fasta
+#     fileF=/home/jconnell/projects/niab/fusarium/RNA_Seq_data/trimmed/Folac_R1/F/Folac_R1_1_trim.fq.gz    
+#     fileR=/home/jconnell/projects/niab/fusarium/RNA_Seq_data/trimmed/Folac_R1/R/Folac_R1_2_trim.fq.gz
+#     add1f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_1M/"$strain"_1M_RNA_unmapped_cleaned_F.fq.gz
+#     add1r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_1M/"$strain"_1M_RNA_unmapped_cleaned_R.fq.gz
+#     add2f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_2/"$strain"_2_RNA_unmapped_cleaned_F.fq.gz
+#     add2r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_2/"$strain"_2_RNA_unmapped_cleaned_R.fq.gz
+#     add3f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_2M/"$strain"_2M_RNA_unmapped_cleaned_F.fq.gz
+#     add3r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_2M/"$strain"_2M_RNA_unmapped_cleaned_R.fq.gz
+#     add4f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_3/"$strain"_3_RNA_unmapped_cleaned_F.fq.gz
+#     add4r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_3/"$strain"_3_RNA_unmapped_cleaned_R.fq.gz
+#     add5f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_4/"$strain"_4_RNA_unmapped_cleaned_F.fq.gz
+#     add5r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_4/"$strain"_4_RNA_unmapped_cleaned_R.fq.gz
+#     add6f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_5/"$strain"_5_RNA_unmapped_cleaned_F.fq.gz
+#     add6r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_5/"$strain"_5_RNA_unmapped_cleaned_R.fq.gz
+#     add7f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_R1M/"$strain"_R1M_RNA_unmapped_cleaned_F.fq.gz
+#     add7r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_R1M/"$strain"_R1M_RNA_unmapped_cleaned_R.fq.gz
+#     add8f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_R4M/"$strain"_R4M_RNA_unmapped_cleaned_F.fq.gz
+#     add8r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_R4M/"$strain"_R4M_RNA_unmapped_cleaned_R.fq.gz
+#     genome=$(basename $Assembly .fasta) 
+#     SAindex=11 # Typically between 10 and 15, e.g. for 45Mb genome use 11
+#     OutDir=/home/jconnell/niab/fusarium/rna_seq_data/STAR_pathogen_annotation_alignment/$genome
+#     mkdir -p $OutDir 
+#     ProgDir=git_repos/niab_repos/fusarium_oxysporum
+#     sbatch $ProgDir/star_fusarium_multipleinput.sh $Assembly $fileF $fileR $add1f $add1r $add2f $add2r $add3f $add3r $add4f $add4r $add5f\
+#     $add5r $add6f $add6r $add7f $add7r $add8f $add8r $OutDir $SAindex $strain
+#  done
+
+####AJ260 - stocks 4 - annotated only from experimental RNA - Seq data 
+for x in AJ260_2022; do 
     strain=$(basename ${x} _2022)
-    Assembly=/home/jconnell/niab/fusarium/complete_nanopore_genomes/${x}/"$strain"_2022.fasta
-    fileF=/home/jconnell/projects/niab/fusarium/RNA_Seq_data/trimmed/Folac_R1/F/Folac_R1_1_trim.fq.gz    
-    fileR=/home/jconnell/projects/niab/fusarium/RNA_Seq_data/trimmed/Folac_R1/R/Folac_R1_2_trim.fq.gz
+    Assembly=/home/jconnell/niab/fusarium/complete_nanopore_genomes/${x}/*.fasta
     add1f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_1M/"$strain"_1M_RNA_unmapped_cleaned_F.fq.gz
-    add1r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_1M/"$strain"_1M_RNA_unmapped_cleaned_R.fq.gZ
+    add1r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_1M/"$strain"_1M_RNA_unmapped_cleaned_R.fq.gz
     add2f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_2/"$strain"_2_RNA_unmapped_cleaned_F.fq.gz
     add2r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_2/"$strain"_2_RNA_unmapped_cleaned_R.fq.gz
     add3f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_2M/"$strain"_2M_RNA_unmapped_cleaned_F.fq.gz
-    add3r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_2M/"$strain"_2M_RNA_unmapped_cleaned_R.fq.gZ
+    add3r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_2M/"$strain"_2M_RNA_unmapped_cleaned_R.fq.gz
     add4f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_3/"$strain"_3_RNA_unmapped_cleaned_F.fq.gz
     add4r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_3/"$strain"_3_RNA_unmapped_cleaned_R.fq.gz
-    add5f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_4/"$strain"_4_RNA_unmapped_cleaned_F.fq.gz
-    add5r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_4/"$strain"_4_RNA_unmapped_cleaned_R.fq.gz
-    add6f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_5/"$strain"_5_RNA_unmapped_cleaned_F.fq.gz
-    add6r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_5/"$strain"_5_RNA_unmapped_cleaned_R.fq.gz
-    add7f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_R1M/"$strain"_R1M_RNA_unmapped_cleaned_F.fq.gz
-    add7r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_R1M/"$strain"_R1M_RNA_unmapped_cleaned_R.fq.gz
-    add8f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_R4M/"$strain"_R4M_RNA_unmapped_cleaned_F.fq.gz
-    add8r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_R4M/"$strain"_R4M_RNA_unmapped_cleaned_R.fq.gz
+    add5f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_3M/"$strain"_3M_RNA_unmapped_cleaned_F.fq.gz
+    add5r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_3M/"$strain"_3M_RNA_unmapped_cleaned_R.fq.gz
+    add6f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_4/"$strain"_4_RNA_unmapped_cleaned_F.fq.gz
+    add6r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_4/"$strain"_4_RNA_unmapped_cleaned_R.fq.gz
+    add7f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_4M/"$strain"_4M_RNA_unmapped_cleaned_F.fq.gz
+    add7r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_4M/"$strain"_4M_RNA_unmapped_cleaned_R.fq.gz
+    add8f=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_5/"$strain"_5_RNA_unmapped_cleaned_F.fq.gz
+    add8r=/home/jconnell/niab/fusarium/rna_seq_data/RNA_for_annotation/${strain}/"$strain"_5/"$strain"_5_RNA_unmapped_cleaned_R.fq.gz
     genome=$(basename $Assembly .fasta) 
     SAindex=11 # Typically between 10 and 15, e.g. for 45Mb genome use 11
     OutDir=/home/jconnell/niab/fusarium/rna_seq_data/STAR_pathogen_annotation_alignment/$genome
     mkdir -p $OutDir 
     ProgDir=git_repos/niab_repos/fusarium_oxysporum
-    sbatch $ProgDir/star_fusarium_multipleinput.sh $Assembly $fileF $fileR $add1f $add1r $add2f $add2r $add3f $add3r $add4f $add4r $add5f\
+    sbatch $ProgDir/star_fusarium_AJ260.sh $Assembly $add1f $add1r $add2f $add2r $add3f $add3r $add4f $add4r $add5f\
     $add5r $add6f $add6r $add7f $add7r $add8f $add8r $OutDir $SAindex $strain
  done
-
-
-
-
 
 
 
