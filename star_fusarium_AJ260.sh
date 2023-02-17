@@ -73,5 +73,5 @@ STAR \
 --limitBAMsortRAM 180000000000 \
 --runThreadN 16
 
-cp -r star_* $OutDir
+cp -r "$name"_* $OutDir
 rm -r $WorkDir
