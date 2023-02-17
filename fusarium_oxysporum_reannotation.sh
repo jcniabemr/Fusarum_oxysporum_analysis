@@ -158,15 +158,15 @@
 # done  
 
 ####Run Braker
-for file in AJ705_2022 AJ260_2022 AJ520_2022; do
+for file in AJ260_2022 AJ520_2022; do
    Assembly=projects/niab/fusarium/complete_nanopore_genomes/$file/"$file".fasta
    Strain=$(echo $Assembly| rev | cut -d '/' -f2 | rev) 
    Organism=$(echo $Assembly | rev | cut -d '/' -f4 | rev) 
    OutDir=/home/jconnell/projects/niab/fusarium/rna_seq_data/re_annotation/braker/$file
    mkdir -p $OutDir
-   AcceptedHits=/home/jconnell/niab/fusarium/rna_seq_data/STAR_pathogen_annotation_alignment/${file}/*.bam
-   GeneModelName="$Organism"_"$Strain"_braker_RNA 
-   ProgDir=git_repos/niab_repos/fusarium_oxysporum 
+   AcceptedHits=niab/fusarium/rna_seq_data/STAR_pathogen_annotation_alignment/${file}/*.bam
+   GeneModelName="$Organism"_"$Strain"_braker1
+   ProgDir=git_repos/niab_repos/fusarium_oxysporum
    sbatch $ProgDir/braker.sh $Assembly $OutDir $AcceptedHits $GeneModelName
 done 
 ####http://topaz.gatech.edu/genemark/license_download.cgi #genemark install 

@@ -18,7 +18,7 @@ gene_name=$4
 CurDir=$PWD
 
 mkdir -p $WorkDir
-cp $CurDir/$Assembly $WorkDir/assembly.fa
+cp $Assembly $WorkDir/assembly.fa
 cp $AcceptedHits $WorkDir/alignedRNA.bam
 cd $WorkDir
 
@@ -28,7 +28,7 @@ $braker \
   --AUGUSTUS_BIN_PATH=/mnt/shared/scratch/jconnell/apps/Augustus/bin \
   --AUGUSTUS_SCRIPTS_PATH=/mnt/shared/scratch/jconnell/apps/Augustus/scripts \
   --BAMTOOLS_PATH=/mnt/shared/scratch/jconnell/apps/bamtools/bin \
-  --GENEMARK_PATH=/home/jconnell/jconnell/genemark/latest/gmes_linux_64_4 \
+  --GENEMARK_PATH=/home/jconnell/projects/niab/fusarium/software/genemark/gmes_linux_64 \
   --SAMTOOLS_PATH=/mnt/shared/scratch/jconnell/apps/samtools/bin \
   --PROTHINT_PATH=/mnt/shared/scratch/jconnell/apps/ProtHint/ProtHint-2.6.0/bin \
   --ALIGNMENT_TOOL_PATH=/home/jconnell/miniconda3/pkgs/spaln-2.4.7-pl5262h9a82719_0/bin \
