@@ -157,87 +157,87 @@
 #     sbatch $ProgDir/cufflinks.sh $AcceptedHits $OutDir
 # done  
 
-####Run Braker
-for file in AJ260_2022 AJ520_2022; do
-   Assembly=projects/niab/fusarium/complete_nanopore_genomes/$file/"$file".fasta
-   Strain=$(echo $Assembly| rev | cut -d '/' -f2 | rev) 
-   Organism=$(echo $Assembly | rev | cut -d '/' -f4 | rev) 
-   OutDir=/home/jconnell/projects/niab/fusarium/rna_seq_data/re_annotation/braker/$file
-   mkdir -p $OutDir
-   AcceptedHits=niab/fusarium/rna_seq_data/STAR_pathogen_annotation_alignment/${file}/*.bam
-   GeneModelName="$Organism"_"$Strain"_braker1
-   ProgDir=git_repos/niab_repos/fusarium_oxysporum
-   sbatch $ProgDir/braker.sh $Assembly $OutDir $AcceptedHits $GeneModelName
-done 
+# ####Run Braker
+# for file in AJ260_2022; do
+#    Assembly=projects/niab/fusarium/complete_nanopore_genomes/$file/"$file".fasta
+#    Strain=$(echo $Assembly| rev | cut -d '/' -f2 | rev) 
+#    Organism=$(echo $Assembly | rev | cut -d '/' -f4 | rev) 
+#    OutDir=/home/jconnell/projects/niab/fusarium/rna_seq_data/re_annotation/braker/$file
+#    mkdir -p $OutDir
+#    AcceptedHits=niab/fusarium/rna_seq_data/STAR_pathogen_annotation_alignment/${file}/*.bam
+#    GeneModelName="$Organism"_"$Strain"_braker2
+#    ProgDir=git_repos/niab_repos/fusarium_oxysporum
+#    sbatch $ProgDir/braker.sh $Assembly $OutDir $AcceptedHits $GeneModelName
+# done 
 ####http://topaz.gatech.edu/genemark/license_download.cgi #genemark install 
 
 
-####Run codingquarry
-# for race in AJ516_2022; do
-#  for Assembly in /home/jconnell/projects/niab/fusarium/complete_nanopore_genomes/$race/AJ516_2022.fasta; do
-#     GTF=/home/jconnell/fusarium/rna_seq_data/re_annotation/cufflinks/AJ516_2022/transcripts.gtf
+###Run codingquarry
+# for race in AJ705_2022 AJ520_2022; do
+#  for Assembly in /home/jconnell/projects/niab/fusarium/complete_nanopore_genomes/$race/"$race".fasta; do
+#     GTF=/home/jconnell/fusarium/rna_seq_data/re_annotation/cufflinks/$race/transcripts.gtf
 #     OutDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/codingquarry/$race
 #     mkdir -p $OutDir
-#     ProgDir=/home/jconnell/git_repos/niab_repos/fusarium
+#     ProgDir=/home/jconnell/git_repos/niab_repos/fusarium_oxysporum
 #     sbatch $ProgDir/codingquarry.sh $Assembly $GTF $OutDir
 #   done
 # done  
 
 ####Combine annotations 
-# for strain in AJ516_2022; do
-# for BrakerGff in $(ls /home/jconnell/jconnell/braker_jconnell_5835741/braker/augustus.hints.gff3); do
-# Assembly=/home/jconnell/projects/niab/fusarium/complete_nanopore_genomes/$strain/AJ516_2022.fasta
-# importgff=/home/jconnell/fusarium/rna_seq_data/re_annotation/CandidateEffectorGFFs/F._oxysporum_f._sp._lactucae_AJ516_CandidateEffector.gff
-# CodingQuarryGff=/home/jconnell/fusarium/rna_seq_data/re_annotation/codingquarry/AJ516_2022/out/PredictedPass.gff3
-# PGNGff=/home/jconnell/fusarium/rna_seq_data/re_annotation/codingquarry/AJ516_2022/out/PGN_predictedPass.gff3
-# AddDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/combine_annotations 
-# FinalDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/final_annotations/mk2
-# AddGenesList=$AddDir/additional_genes.txt
-# AddGenesGff=$AddDir/additional_genes.gff
-# FinalGff=$AddDir/combined_genes.gff
-# mkdir -p $FinalDir
-# mkdir -p $AddDir
-# bedtools intersect -v -a $CodingQuarryGff -b $BrakerGff | grep 'gene'| cut -f2 -d'=' | cut -f1 -d';' > $AddGenesList
-# bedtools intersect -v -a $PGNGff -b $BrakerGff | grep 'gene'| cut -f2 -d'=' | cut -f1 -d';' >> $AddGenesList
-# ProgDir=/mnt/shared/scratch/agomez/apps/git_repos/bioinformatics_tools/Gene_prediction
-# $ProgDir/gene_list_to_gff.pl $AddGenesList $CodingQuarryGff CodingQuarry_v2.0 ID CodingQuary > $AddGenesGff
-# $ProgDir/gene_list_to_gff.pl $AddGenesList $PGNGff PGNCodingQuarry_v2.0 ID CodingQuary >> $AddGenesGff
-# $ProgDir/add_CodingQuary_features.pl $AddGenesGff $Assembly > $FinalDir/final_genes_CodingQuary.gff3
-# $ProgDir/gff2fasta.pl $Assembly $FinalDir/final_genes_CodingQuary.gff3 $FinalDir/final_genes_CodingQuary
-# cp $BrakerGff $FinalDir/final_genes_Braker.gff3
-# $ProgDir/gff2fasta.pl $Assembly $FinalDir/final_genes_Braker.gff3 $FinalDir/final_genes_Braker
-# cat $FinalDir/final_genes_Braker.pep.fasta $FinalDir/final_genes_CodingQuary.pep.fasta | sed -r 's/\*/X/g' > $FinalDir/final_genes_combined.pep.fasta
-# cat $FinalDir/final_genes_Braker.cdna.fasta $FinalDir/final_genes_CodingQuary.cdna.fasta > $FinalDir/final_genes_combined.cdna.fasta
-# cat $FinalDir/final_genes_Braker.gene.fasta $FinalDir/final_genes_CodingQuary.gene.fasta > $FinalDir/final_genes_combined.gene.fasta
-# cat $FinalDir/final_genes_Braker.upstream3000.fasta $FinalDir/final_genes_CodingQuary.upstream3000.fasta > $FinalDir/final_genes_combined.upstream3000.fasta
-# GffBraker=$FinalDir/final_genes_CodingQuary.gff3
-# GffQuary=$FinalDir/final_genes_Braker.gff3
-# GffAppended=$FinalDir/final_genes_appended.gff3
-# cat $GffBraker $GffQuary > $GffAppended
-# done
-# done 
+source activate bedtools
+
+for strain in AJ520_2022; do
+for BrakerGff in $(ls /home/jconnell/fusarium/rna_seq_data/re_annotation/braker/$strain/augustus.hints.gff3); do
+Assembly=/home/jconnell/fusarium/complete_nanopore_genomes/$strain/$strain.fasta
+CodingQuarryGff=/home/jconnell/fusarium/rna_seq_data/re_annotation/codingquarry/$strain/out/PredictedPass.gff3
+PGNGff=/home/jconnell/fusarium/rna_seq_data/re_annotation/codingquarry/$strain/out/PGN_predictedPass.gff3
+AddDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/combine_annotations 
+FinalDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/final_annotations/
+AddGenesList=$AddDir/additional_genes.txt
+AddGenesGff=$AddDir/additional_genes.gff
+FinalGff=$AddDir/combined_genes.gff
+mkdir -p $FinalDir
+mkdir -p $AddDir
+bedtools intersect -v -a $CodingQuarryGff -b $BrakerGff | grep 'gene'| cut -f2 -d'=' | cut -f1 -d';' > $AddGenesList
+bedtools intersect -v -a $PGNGff -b $BrakerGff | grep 'gene'| cut -f2 -d'=' | cut -f1 -d';' >> $AddGenesList
+ProgDir=/mnt/shared/scratch/agomez/apps/git_repos/bioinformatics_tools/Gene_prediction
+$ProgDir/gene_list_to_gff.pl $AddGenesList $CodingQuarryGff CodingQuarry_v2.0 ID CodingQuary > $AddGenesGff
+$ProgDir/gene_list_to_gff.pl $AddGenesList $PGNGff PGNCodingQuarry_v2.0 ID CodingQuary >> $AddGenesGff
+$ProgDir/add_CodingQuary_features.pl $AddGenesGff $Assembly > $FinalDir/final_genes_CodingQuary.gff3
+$ProgDir/gff2fasta.pl $Assembly $FinalDir/final_genes_CodingQuary.gff3 $FinalDir/final_genes_CodingQuary
+cp $BrakerGff $FinalDir/final_genes_Braker.gff3
+$ProgDir/gff2fasta.pl $Assembly $FinalDir/final_genes_Braker.gff3 $FinalDir/final_genes_Braker
+cat $FinalDir/final_genes_Braker.pep.fasta $FinalDir/final_genes_CodingQuary.pep.fasta | sed -r 's/\*/X/g' > $FinalDir/final_genes_combined.pep.fasta
+cat $FinalDir/final_genes_Braker.cdna.fasta $FinalDir/final_genes_CodingQuary.cdna.fasta > $FinalDir/final_genes_combined.cdna.fasta
+cat $FinalDir/final_genes_Braker.gene.fasta $FinalDir/final_genes_CodingQuary.gene.fasta > $FinalDir/final_genes_combined.gene.fasta
+cat $FinalDir/final_genes_Braker.upstream3000.fasta $FinalDir/final_genes_CodingQuary.upstream3000.fasta > $FinalDir/final_genes_combined.upstream3000.fasta
+GffBraker=$FinalDir/final_genes_CodingQuary.gff3
+GffQuary=$FinalDir/final_genes_Braker.gff3
+GffAppended=$FinalDir/final_genes_appended.gff3
+cat $GffBraker $GffQuary > $GffAppended
+done
+done 
 
 
-# for Strain in AJ516_2022; do
-# for GffAppended in $(ls /home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/mk2/final_genes_appended.gff3); do
-#   FinalDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/mk2/remove_dup_features
-#   mkdir -p $FinalDir
-#   # Remove duplicated genes
-#   GffFiltered=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/mk2/remove_dup_features/filtered_duplicates.gff
-#   ProgDir=/mnt/shared/scratch/agomez/apps/git_repos/bioinformatics_tools/Gene_prediction
-#   $ProgDir/remove_dup_features.py --inp_gff $GffAppended --out_gff $GffFiltered
-#   # Rename genes
-#   GffRenamed=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ516_2022/final_annotations/mk2/remove_dup_features/final_genes_appended_renamed.gff3
-#   LogFile=/home/jconnell/projects/niab/fusarium/final_predictions/$Strain/final/added_annotations/final_genes_appended_renamed.log
-#   $ProgDir/gff_rename_genes.py --inp_gff $GffFiltered --conversion_log $LogFile > $GffRenamed
-#   rm $GffFiltered
-#   # Create renamed fasta files from each gene feature   
-#   Assembly=$(ls /home/jconnell/projects/niab/fusarium/complete_nanopore_genomes/$Strain/AJ516_2022.fasta)
-#   $ProgDir/gff2fasta.pl $Assembly $GffRenamed $FinalDir/final_genes_appended_renamed
-#   # The proteins fasta file contains * instead of Xs for stop codons, these should be changed
-#   sed -i 's/\*/X/g' $FinalDir/final_genes_appended_renamed.pep.fasta
-#  done 
-# done
+for strain in AJ520_2022; do
+for GffAppended in $(ls /home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/final_annotations/final_genes_appended.gff3); do
+  FinalDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/final_annotations/remove_dup_features
+  mkdir -p $FinalDir
+  # Remove duplicated genes
+  GffFiltered=/home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/final_annotations/remove_dup_features/filtered_duplicates.gff
+  ProgDir=/mnt/shared/scratch/agomez/apps/git_repos/bioinformatics_tools/Gene_prediction
+  $ProgDir/remove_dup_features.py --inp_gff $GffAppended --out_gff $GffFiltered
+  # Rename genes
+  GffRenamed=/home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/final_annotations/remove_dup_features/final_genes_appended_renamed.gff3
+  $ProgDir/gff_rename_genes.py --inp_gff $GffFiltered --conversion_log final_genes_appended_renamed.log > $GffRenamed
+  rm $GffFiltered
+  # Create renamed fasta files from each gene feature   
+  Assembly=$(ls /home/jconnell/projects/niab/fusarium/complete_nanopore_genomes/$strain/"$strain".fasta)
+  $ProgDir/gff2fasta.pl $Assembly $GffRenamed $FinalDir/final_genes_appended_renamed
+  # The proteins fasta file contains * instead of Xs for stop codons, these should be changed
+  sed -i 's/\*/X/g' $FinalDir/final_genes_appended_renamed.pep.fasta
+ done 
+done
 
 # ####Create gene effector dict
 
