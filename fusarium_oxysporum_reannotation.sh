@@ -186,7 +186,7 @@
 ####Combine annotations 
 source activate bedtools
 
-for strain in AJ520_2022; do
+for strain in AJ705_2022; do
 for BrakerGff in $(ls /home/jconnell/fusarium/rna_seq_data/re_annotation/braker/$strain/augustus.hints.gff3); do
 Assembly=/home/jconnell/fusarium/complete_nanopore_genomes/$strain/$strain.fasta
 CodingQuarryGff=/home/jconnell/fusarium/rna_seq_data/re_annotation/codingquarry/$strain/out/PredictedPass.gff3
@@ -219,7 +219,7 @@ done
 done 
 
 
-for strain in AJ520_2022; do
+for strain in AJ705_2022; do
 for GffAppended in $(ls /home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/final_annotations/final_genes_appended.gff3); do
   FinalDir=/home/jconnell/fusarium/rna_seq_data/re_annotation/$strain/final_annotations/remove_dup_features
   mkdir -p $FinalDir

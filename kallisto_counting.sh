@@ -6,14 +6,14 @@
 
 ####Kallisto count 
 ####Count reads for AJ516
-for strain in $(ls /home/jconnell/fusarium/rna_seq_data/lettuce_alignment | grep "AJ520_4"); do
-Transcriptome=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ520_2022/final_annotations/remove_dup_features/final_genes_appended_renamed.cds.fasta
-    for RawData in /home/jconnell/fusarium/rna_seq_data/decontaminated/AJ520/$strain; do
+for strain in $(ls /home/jconnell/fusarium/rna_seq_data/lettuce_alignment | grep "AJ705"); do
+Transcriptome=/home/jconnell/fusarium/rna_seq_data/re_annotation/AJ705_2022/final_annotations/remove_dup_features/final_genes_appended_renamed.cds.fasta
+    for RawData in /home/jconnell/fusarium/rna_seq_data/decontaminated/AJ705/$strain; do
         FileF=$RawData/F/*cleaned.fq.gz
         FileR=$RawData/R/*cleaned.fq.gz
         echo $FileF
         echo $FileR
-        OutDir=/home/jconnell/fusarium/kallisto/$strain
+        OutDir=/home/jconnell/fusarium/kallisto/AJ705/$strain
         mkdir -p $OutDir
         ProgDir=/home/jconnell/git_repos/niab_repos/fusarium_oxysporum
         sbatch $ProgDir/kallisto.sh $Transcriptome $FileF $FileR $OutDir

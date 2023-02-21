@@ -8,13 +8,13 @@ library(ggplot2)
 library(ggrepel)
 library(pheatmap)
 library(dplyr)
-setwd("C:/Users/john.connell/Documents/Bioinformatics_2022/projects/Fusarium_oxysporum/deseq2/AJ520")
+setwd("C:/Users/john.connell/Documents/Bioinformatics_2022/projects/Fusarium_oxysporum/deseq2/AJ705")
 
 #Create tx2gene table 
 
-gene.t <- paste0("g", 1:21848, ".t", 1)
+gene.t <- paste0("g", 1:23508, ".t", 1)
 gene.t <- as.data.frame(gene.t)
-gene <- paste0("g", 1:21848)
+gene <- paste0("g", 1:23508)
 gene <- as.data.frame(gene)
 tx2gene <- cbind(gene.t, gene)
 colnames(tx2gene) <- c("TXNAME", "GENEID")
@@ -31,7 +31,7 @@ invisible(sapply(seq(1,3), function(i) {colnames(txi.genes[[i]])<<-mysamples}))
 designtable <- mysamples
 designtable <- as.data.frame(designtable)
 condition <- function(designtable){
-  if ((designtable == "AJ520_1M") || (designtable == "AJ520_R1M") || (designtable == "AJ520_R4M")|| (designtable == "AJ520_2M"))
+  if ((designtable == "AJ705_5M") || (designtable == "AJ705_3M") || (designtable == "AJ705_6M")|| (designtable == "AJ705_4M"))
     return ("control")
   else return ("experimental")
 }
@@ -74,7 +74,7 @@ sig.res <- sig.res[order(sig.res$padj),]
 sig.res.upregulated <- sig.res[sig.res$log2FoldChange >=1, ]
 sig.res.downregulated <- sig.res[sig.res$log2FoldChange <=-1, ]
 summary(sig.res)
-write.table(sig.res,"C:/Users/john.connell/Documents/Bioinformatics_2022/projects/Fusarium_oxysporum/deseq2/AJ520/all_data.txt",sep="\t",na="",quote=F)
+write.table(sig.res,"C:/Users/john.connell/Documents/Bioinformatics_2022/projects/Fusarium_oxysporum/deseq2/AJ705/AJ705_all_data.txt",sep="\t",na="",quote=F)
 
 
 #PCA Plot
@@ -87,19 +87,21 @@ pca_plot<- ggplot(data, aes(PC1, PC2, color=group)) +
   geom_point(size=2) +
   xlab(paste0("PC1: ",percentVar[1],"% variance")) +
   ylab(paste0("PC2: ",percentVar[2],"% variance")) + geom_text_repel(aes(label=colnames(vst1))) + theme_light() +
+  ggtitle("AJ705 PCA")+
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         panel.border = element_rect(colour = "black",fill=NA, size=1), 
         axis.title.y = element_text(size = 20),
-        axis.title.x = element_text(size = 20)) +
+        axis.title.x = element_text(size = 20), 
+        plot.title = element_text(size = 30)) +
         scale_color_discrete(breaks=c("experimental", "control"))
 coord_fixed()
 pca_plot
-ggsave("C:/Users/john.connell/Documents/Bioinformatics_2022/projects/Fusarium_oxysporum/deseq2/AJ520/PCA_vst_false.jpeg", pca_plot, dpi=300, height=10, width=12)
+ggsave("C:/Users/john.connell/Documents/Bioinformatics_2022/projects/Fusarium_oxysporum/deseq2/AJ705/PCA_vst_false.jpeg", pca_plot, dpi=300, height=10, width=12)
 
 #Plot heatmap of differential expression 
 
-all_data <- read.table("C:/Users/john.connell/Documents/Bioinformatics_2022/projects/Fusarium_oxysporum/deseq2/AJ520/all_data.txt")
+all_data <- read.table("C:/Users/john.connell/Documents/Bioinformatics_2022/projects/Fusarium_oxysporum/deseq2/AJ705/all_data.txt")
 subset <- all_data[2]
 
 highlfc <- filter(subset, log2FoldChange >= 10 | log2FoldChange <= -10)
@@ -113,5 +115,5 @@ save_pheatmap_pdf <- function(x, filename, width=3, height=25) {
   grid::grid.draw(x$gtable)
   dev.off()
 }
-save_pheatmap_pdf(heatmapH, "C:/Users/john.connell/Documents/Bioinformatics_2022/projects/Fusarium_oxysporum/deseq2/AJ520/AJ520_l2FC.pdf")
+save_pheatmap_pdf(heatmapH, "C:/Users/john.connell/Documents/Bioinformatics_2022/projects/Fusarium_oxysporum/deseq2/AJ705/AJ705_l2FC.pdf")
 
