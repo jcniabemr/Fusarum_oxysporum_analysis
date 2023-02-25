@@ -116,9 +116,10 @@ mape_pd = mape_pd.astype({'l2FC':'float'})
 col_names=["mape_gene","l2FC"]
 with open("mape_data" + '.txt', 'w') as file:
     file.write(tabulate(mape_pd, headers=col_names))
+
 maple_pd = pd.DataFrame(mapleplot, columns=["gene", "l2FC"])
 maple_pd = maple_pd.set_index("gene")
-maple_pd = mape_pd.astype({'l2FC':'float'})
+maple_pd = maple_pd.astype({'l2FC':'float'})
 col_names=["maple_gene","l2FC"]
 with open("maple_data" + '.txt', 'w') as file:
     file.write(tabulate(maple_pd, headers=col_names))
@@ -129,3 +130,13 @@ mapeheat=sns.heatmap(mape_pd,cmap='RdBu')
 plt.savefig('mapeheat.png')
 mapleheat=sns.heatmap(maple_pd,cmap='RdBu')
 plt.savefig('mapleheat.png')
+
+
+
+def function_make_plot (filename):
+    plt.figure(figsize=(9,18))
+    dd=sns.heatmap(filename,cmap='RdBu')
+    plt.savefig(filename + ".png")
+
+for x in [mape_pd, maple_pd]:
+    function_make_plot(x)
