@@ -26,6 +26,7 @@ maple_gene_list=[]
 plot_list=[]
 mapeplot=[]
 mapleplot=[]
+option1=[]
 
 ####Parse files
 ap=argparse.ArgumentParser()
@@ -33,6 +34,8 @@ ap.add_argument('-gff',required=True,type=str,help='GFF file of genes')
 ap.add_argument('-ef',required=True,type=str,help='Effector gff')
 ap.add_argument('-de',required=True,type=str,help='DEG file from DESeq2')
 ap.add_argument('-st',required=True,type=str,help='Strain of Fo eg AJ516')
+ap.add_argument('-glist',type=str,nargs='+',help='comma seperated list of genes to plot')
+ap.add_argument('-cpn',type=str,help='custom heatmap name', default='custom_plot')
 args=ap.parse_args()
 
 ####Open files 
@@ -40,6 +43,8 @@ gff=open(args.gff)
 ef=open(args.ef)
 de=open(args.de)
 st=(args.st)
+gene_list=(args.glist)
+custom_plot_name=(args.cpn)
 
 ####Expressed gene list  
 for x in de:
@@ -125,18 +130,39 @@ with open("maple_data" + '.txt', 'w') as file:
     file.write(tabulate(maple_pd, headers=col_names))
 
 ####Plot heatmaps 
-plt.figure(figsize=(9,18))
-mapeheat=sns.heatmap(mape_pd,cmap='RdBu')
-plt.savefig('mapeheat.png')
-mapleheat=sns.heatmap(maple_pd,cmap='RdBu')
-plt.savefig('mapleheat.png')
+# plt.figure(figsize=(9,18))
+# mapeheat=sns.heatmap(mape_pd,cmap='RdBu')
+# plt.savefig('mapeheat.png')
+# mapleheat=sns.heatmap(maple_pd,cmap='RdBu')
+# plt.savefig('mapleheat.png')
+
+# def function_make_plot (filename):
+#     plt.figure(figsize=(9,18))
+#     dd=sns.heatmap(filename,cmap='RdBu')
+#     plt.savefig(filename + ".png")
+
+# for x in [mape_pd, maple_pd]:
+#     function_make_plot(x)
+
+####Custom heatmaps 
+####Option 1 custom gene list 
+if gene_list:
+    for x in gene_list:
+        splitgenes=x.split(",")
+        for y in splitgenes:
+            for x in plot_list:
+                if y == x[0]:
+                    option1.append(x)
+                    cust1 = pd.DataFrame(option1, columns=["gene", "l2FC"])
+                    cust1 = cust1.set_index("gene")
+                    cust1 = cust1.astype({'l2FC':'float'})
+                    plt.figure(figsize=(9,18))
+                    mapeheat=sns.heatmap(cust1,cmap='RdBu')
+                    plt.savefig(custom_plot_name + ".png")
+                else:
+                    pass 
 
 
+            
 
-def function_make_plot (filename):
-    plt.figure(figsize=(9,18))
-    dd=sns.heatmap(filename,cmap='RdBu')
-    plt.savefig(filename + ".png")
 
-for x in [mape_pd, maple_pd]:
-    function_make_plot(x)
