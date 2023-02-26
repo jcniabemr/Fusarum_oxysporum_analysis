@@ -1,6 +1,7 @@
 #!/usr/bin/env python 
 
 #####Script to plot heatmap of effector genes based on L2FC expression tables
+####Other fucntions are custom heatmaps based on providing a "," sep list of gene names eg g1,g2,g3
 
 ####Import packages 
 import argparse 
@@ -16,17 +17,18 @@ import matplotlib.pyplot as plt
 #File2=Jamies effector gff file  
 #File3=gff file of genes 
 
-####Create list/dicts
+####Create lists
 gl=[]
-all_genes={}
-mape_gene={}
-maple_gene={}
 mape_gene_list=[]
 maple_gene_list=[]
 plot_list=[]
 mapeplot=[]
 mapleplot=[]
 option1=[]
+####Create dicts 
+all_genes={}
+mape_gene={}
+maple_gene={}
 
 ####Parse files
 ap=argparse.ArgumentParser()
@@ -130,19 +132,19 @@ with open("maple_data" + '.txt', 'w') as file:
     file.write(tabulate(maple_pd, headers=col_names))
 
 ####Plot heatmaps 
-# plt.figure(figsize=(9,18))
-# mapeheat=sns.heatmap(mape_pd,cmap='RdBu')
-# plt.savefig('mapeheat.png')
-# mapleheat=sns.heatmap(maple_pd,cmap='RdBu')
-# plt.savefig('mapleheat.png')
+if not mape_pd.empty:
+    plt.figure(figsize=(9,18))
+    mapeheat=sns.heatmap(mape_pd,cmap='RdBu')
+    plt.savefig('mapeheat.png')
+else:
+    pass
 
-# def function_make_plot (filename):
-#     plt.figure(figsize=(9,18))
-#     dd=sns.heatmap(filename,cmap='RdBu')
-#     plt.savefig(filename + ".png")
-
-# for x in [mape_pd, maple_pd]:
-#     function_make_plot(x)
+if not maple_pd.empty: 
+    plt.figure(figsize=(9,18))
+    mapleheat=sns.heatmap(maple_pd,cmap='RdBu')
+    plt.savefig('mapleheat.png')
+else:
+    pass 
 
 ####Custom heatmaps 
 ####Option 1 custom gene list 
@@ -161,8 +163,3 @@ if gene_list:
                     plt.savefig(custom_plot_name + ".png")
                 else:
                     pass 
-
-
-            
-
-
