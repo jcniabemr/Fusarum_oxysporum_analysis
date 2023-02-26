@@ -3,6 +3,15 @@
 #####Script to plot heatmap of effector genes based on L2FC expression tables
 ####Other fucntions are custom heatmaps based on providing a "," sep list of gene names eg g1,g2,g3
 
+####Example 
+#python effector_dict_v2.py \
+#-gff final_genes_appended_renamed.gff3 \
+#-ef F._oxysporum_f._sp._lactucae_AJ516_CandidateEffector.gff \
+#-de AJ516_l2fc.txt \
+#-st AJ516 \
+#-glist g10200,g3434,g183 \
+#-cpn subset1
+
 ####Import packages 
 import argparse 
 import re
