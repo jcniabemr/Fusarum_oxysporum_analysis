@@ -142,15 +142,25 @@ with open("maple_data" + '.txt', 'w') as file:
 
 ####Plot heatmaps 
 if not mape_pd.empty:
-    plt.figure(figsize=(9,18))
-    mapeheat=sns.heatmap(mape_pd,cmap='RdBu')
+    mapeheat=sns.clustermap(mape_pd,
+        figsize=(10,25),
+        cmap='RdBu_r',
+        row_cluster=True,
+        col_cluster=False,
+        center=0)
+    plt.suptitle("Mape gene expression", fontsize =25)
     plt.savefig('mapeheat.png')
 else:
     pass
 
 if not maple_pd.empty: 
-    plt.figure(figsize=(9,18))
-    mapleheat=sns.heatmap(maple_pd,cmap='RdBu')
+    mapleheat=sns.clustermap(maple_pd,
+        figsize=(10,25),
+        cmap='RdBu_r',
+        row_cluster=True,
+        col_cluster=False,
+        center=0)
+    plt.suptitle("Maple gene expression", fontsize =25)
     plt.savefig('mapleheat.png')
 else:
     pass 
@@ -168,7 +178,10 @@ if gene_list:
                     cust1 = cust1.set_index("gene")
                     cust1 = cust1.astype({'l2FC':'float'})
                     plt.figure(figsize=(9,18))
-                    mapeheat=sns.heatmap(cust1,cmap='RdBu')
+                    mapeheat=sns.heatmap(cust1,
+                        cmap='RdBu_r',
+                        center=0)
+                    plt.suptitle("Gene expression", fontsize =25)
                     plt.savefig(custom_plot_name + ".png")
                 else:
                     pass 
