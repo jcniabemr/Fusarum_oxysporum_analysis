@@ -4,13 +4,22 @@
 ####Other fucntions are custom heatmaps based on providing a "," sep list of gene names eg g1,g2,g3
 
 ####Example 
-#python effector_dict_v2.py \
-#-gff final_genes_appended_renamed.gff3 \
-#-ef F._oxysporum_f._sp._lactucae_AJ516_CandidateEffector.gff \
-#-de AJ516_l2fc.txt \
-#-st AJ516 \
-#-glist g10200,g3434,g183 \
-#-cpn subset1
+# python effector_dict_v2.py \
+# -gff final_genes_appended_renamed.gff3 \
+# -eff F._oxysporum_f._sp._lactucae_AJ516_CandidateEffector.gff \
+# -deg AJ516_l2fc.txt \
+# -str AJ516 \
+# -glist g10200,g3434,g183 \
+# -cpn subset1
+# -milfc minimum value to filter deg file by
+# -mxlfc maximum value to filter deg file by 
+# -out output location 
+
+####Required info = 3 
+#File1=L2FC table from DESeq2
+#File2=Jamies effector gff file  
+#File3=gff file of genes
+#Strain name  
 
 ####Import packages 
 import argparse 
@@ -20,11 +29,7 @@ import pandas as pd
 from tabulate import tabulate
 from pylab import savefig
 import matplotlib.pyplot as plt
-
-####Required files = 3 
-#File1=L2FC table from DESeq2
-#File2=Jamies effector gff file  
-#File3=gff file of genes 
+import os.path
 
 ####Create lists
 gl=[]
@@ -42,20 +47,26 @@ maple_gene={}
 ####Parse files
 ap=argparse.ArgumentParser()
 ap.add_argument('-gff',required=True,type=str,help='GFF file of genes')
-ap.add_argument('-ef',required=True,type=str,help='Effector gff')
-ap.add_argument('-de',required=True,type=str,help='DEG file from DESeq2')
-ap.add_argument('-st',required=True,type=str,help='Strain of Fo eg AJ516')
+ap.add_argument('-eff',required=True,type=str,help='Effector gff')
+ap.add_argument('-deg',required=True,type=str,help='DEG file from DESeq2')
+ap.add_argument('-str',required=True,type=str,help='Strain of Fo eg AJ516')
+ap.add_argument('-out',required=True,type=str,help='output file location')
 ap.add_argument('-glist',type=str,nargs='+',help='comma seperated list of genes to plot')
 ap.add_argument('-cpn',type=str,help='custom heatmap name', default='custom_plot')
+ap.add_argument('-milfc',type=int,help='minimum L2FC to plot')
+ap.add_argument('-mxlfc',type=int,help='max L2FC to plot')
 args=ap.parse_args()
 
 ####Open files 
 gff=open(args.gff)
-ef=open(args.ef)
-de=open(args.de)
-st=(args.st)
+ef=open(args.eff)
+de=open(args.deg)
+st=(args.str)
 gene_list=(args.glist)
 custom_plot_name=(args.cpn)
+minlfc=(args.milfc)
+maxlfc=(args.mxlfc)
+outlocation=(args.out)
 
 ####Expressed gene list  
 for x in de:
@@ -129,15 +140,20 @@ for x in plot_list:
 mape_pd = pd.DataFrame(mapeplot, columns=["gene", "l2FC"])
 mape_pd = mape_pd.set_index("gene")
 mape_pd = mape_pd.astype({'l2FC':'float'})
-col_names=["mape_gene","l2FC"]
-with open("mape_data" + '.txt', 'w') as file:
+col_names = ["mape_gene","l2FC"]
+savepath = outlocation
+filename ='mape_data.txt'
+completename = os.path.join(savepath, filename) 
+with open(completename, 'w') as file:
     file.write(tabulate(mape_pd, headers=col_names))
 
 maple_pd = pd.DataFrame(mapleplot, columns=["gene", "l2FC"])
 maple_pd = maple_pd.set_index("gene")
 maple_pd = maple_pd.astype({'l2FC':'float'})
 col_names=["maple_gene","l2FC"]
-with open("maple_data" + '.txt', 'w') as file:
+filename = 'maple_data.txt'
+completename = os.path.join(savepath, filename)
+with open(completename, 'w') as file:
     file.write(tabulate(maple_pd, headers=col_names))
 
 ####Plot heatmaps 
@@ -149,7 +165,9 @@ if not mape_pd.empty:
         col_cluster=False,
         center=0)
     plt.suptitle("Mape gene expression", fontsize =25)
-    plt.savefig('mapeheat.png')
+    filename = 'mapeheat.png'
+    completename = os.path.join(savepath, filename)
+    plt.savefig(completename)
 else:
     pass
 
@@ -161,7 +179,9 @@ if not maple_pd.empty:
         col_cluster=False,
         center=0)
     plt.suptitle("Maple gene expression", fontsize =25)
-    plt.savefig('mapleheat.png')
+    filename = 'mapleheat.png'
+    completename = os.path.join(savepath, filename)
+    plt.savefig(completename)
 else:
     pass 
 
@@ -178,10 +198,38 @@ if gene_list:
                     cust1 = cust1.set_index("gene")
                     cust1 = cust1.astype({'l2FC':'float'})
                     plt.figure(figsize=(9,18))
-                    mapeheat=sns.heatmap(cust1,
+                    customplot1=sns.heatmap(cust1,
                         cmap='RdBu_r',
                         center=0)
                     plt.suptitle("Gene expression", fontsize =25)
-                    plt.savefig(custom_plot_name + ".png")
+                    filename = (custom_plot_name + "_custom_gene_list.png")
+                    completename = os.path.join(savepath, filename)
+                    plt.savefig(completename)
                 else:
                     pass 
+
+####Option 2 custom expresson values 
+if minlfc:
+    if maxlfc:
+        cust2=pd.DataFrame(plot_list, columns=["gene", "l2FC"])
+        cust2= cust2.set_index("gene")
+        cust2['l2FC']=pd.to_numeric(cust2['l2FC'])
+        filtercust2 = cust2[(cust2['l2FC'] >= maxlfc) | (cust2['l2FC'] <= minlfc)]
+        col_names=["gene", "l2FC"]
+        filename = (custom_plot_name + "_l2fc_expression_data.txt")
+        completename = os.path.join(savepath, filename)
+        with open (completename, 'w') as file:
+            file.write(tabulate(filtercust2, headers=col_names))
+        if not filtercust2.empty:
+            customplot2=sns.clustermap(filtercust2,
+                figsize=(10,25),
+                cmap='RdBu_r',
+                row_cluster=True,
+                col_cluster=False,
+                center=0)
+            plt.suptitle("Gene expression", fontsize =25)
+            filename = (custom_plot_name + "_l2fc_expression_plot.png")
+            completename = os.path.join(savepath, filename)
+            plt.savefig(completename)
+        else:
+            pass     
