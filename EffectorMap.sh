@@ -31,7 +31,7 @@ eff=/home/jconnell/fusarium/gene_effector_interaction/F._oxysporum_f._sp._lactuc
 strain=AJ516
 output_location=/home/jconnell/fusarium/gene_effector_interaction 
 effectormap=/home/jconnell/git_repos/niab_repos/fusarium_oxysporum/effector_map.py
-python $effectormap -gff $gff_file -deg $deg -eff $eff -str $strain -cpn $plot_name	-out $output_location
+python $effectormap -gff $gff_file -deg $deg -eff $eff -str $strain -out $output_location
 
 #############################Example of running with all options################################################# 
 gff_file=/home/jconnell/fusarium/gene_effector_interaction/final_genes_appended_renamed.gff3
