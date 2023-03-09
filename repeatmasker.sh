@@ -1,6 +1,6 @@
 #!/usr/bin/env bash 
 #SBATCH -p long 
-#SBATCH -J bash 
+#SBATCH -J repeatmasker 
 #SBATCH --mem=10G
 #SBATCH --cpus-per-task=4
 

@@ -12,7 +12,6 @@
 #The gff gene file passed using flag <-gff> 
 #The effector file passed using flag <-eff>
 #The differentially expressed gene <-dge>
-#The strain to assing mape to <-str>
 
 ####The optional options are:####
 ###To make a custom heatmap filtered by L2FC (DEGfile) use
@@ -25,24 +24,24 @@
 #The custom plot name <-cpn>
 
 ##############################Exaple of runnig with minimum options############################################ 
-gff_file=/home/jconnell/fusarium/gene_effector_interaction/final_genes_appended_renamed.gff3
-deg=/home/jconnell/fusarium/gene_effector_interaction/AJ516_l2fc.txt
-eff=/home/jconnell/fusarium/gene_effector_interaction/F._oxysporum_f._sp._lactucae_AJ516_CandidateEffector.gff
+gff_file=/home/jconnell/fusarium/gene_effector_interaction/AJ516/final_genes_appended_renamed.gff3
+deg=/home/jconnell/fusarium/gene_effector_interaction/AJ516/AJ516_l2fc.txt
+eff=/home/jconnell/fusarium/gene_effector_interaction/AJ516/F._oxysporum_f._sp._lactucae_AJ516.fna_CandidateEffector.gff
 strain=AJ516
-output_location=/home/jconnell/fusarium/gene_effector_interaction 
-effectormap=/home/jconnell/git_repos/niab_repos/fusarium_oxysporum/effector_map.py
-python $effectormap -gff $gff_file -deg $deg -eff $eff -str $strain -out $output_location
+output_location=/home/jconnell/fusarium/gene_effector_interaction/AJ516 
+effectormap=/home/jconnell/git_repos/niab_repos/fusarium_oxysporum/effector_map_V2.py
+python $effectormap -gff $gff_file -deg $deg -eff $eff -out $output_location
 
 #############################Example of running with all options################################################# 
-gff_file=/home/jconnell/fusarium/gene_effector_interaction/final_genes_appended_renamed.gff3
-deg=/home/jconnell/fusarium/gene_effector_interaction/AJ516_l2fc.txt
-eff=/home/jconnell/fusarium/gene_effector_interaction/F._oxysporum_f._sp._lactucae_AJ516_CandidateEffector.gff
-strain=AJ516
-plot_name=custom_plot
-gene_list=g23494,g12707,g6357,g14775,g157
-min_lfc=-10
-maxlfc=10
-output_location=/home/jconnell/fusarium/gene_effector_interaction 
-effectormap=/home/jconnell/git_repos/niab_repos/fusarium_oxysporum/effector_map.py
-python $effectormap -gff $gff_file -deg $deg -eff $eff -str $strain -cpn $plot_name	-glist $gene_list -milfc $min_lfc -mxlfc $maxlfc -out $output_location
+# gff_file=/home/jconnell/fusarium/gene_effector_interaction/final_genes_appended_renamed.gff3
+# deg=/home/jconnell/fusarium/gene_effector_interaction/AJ516_l2fc.txt
+# eff=/home/jconnell/fusarium/gene_effector_interaction/F._oxysporum_f._sp._lactucae_AJ516_CandidateEffector.gff
+# strain=AJ516
+# plot_name=custom_plot
+# gene_list=g23494,g12707,g6357,g14775,g157
+# min_lfc=-10
+# maxlfc=10
+# output_location=/home/jconnell/fusarium/gene_effector_interaction 
+# effectormap=/home/jconnell/git_repos/niab_repos/fusarium_oxysporum/effector_map.py
+# python $effectormap -gff $gff_file -deg $deg -eff $eff -str $strain -cpn $plot_name	-glist $gene_list -milfc $min_lfc -mxlfc $maxlfc -out $output_location
 

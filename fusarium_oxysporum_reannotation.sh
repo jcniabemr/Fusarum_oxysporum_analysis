@@ -253,7 +253,7 @@
 
 ####Repeat masker 
 
-for x in AJ520_2022 AJ705_2022 AJ516_2022 Fo47_2022 AJ260_2022; do 
+for x in AJ520_2022 AJ705_2022 AJ516_2022 Fo47_2022 AJ260_2022 AJ592_2022 fyto7211_2022 PF1_2022 AJ174_2022; do 
 	infile=/home/jconnell/fusarium/complete_nanopore_genomes/${x}/${x}.fasta
 	outdir=/home/jconnell/fusarium/repeatmasked/${x}
 	mkdir -p $outdir
