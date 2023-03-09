@@ -89,7 +89,7 @@ for k,v in list(all_genes.items()):
 for x in ef:
     x=x.replace("\n","")
     x=x.split("\t")
-    if x[2] == "gene":
+    if x[2] == "gene" or x[2] == "ORF":
         effectcontig = x[0]
         effectstart = x[3]
         effectstop = x[4]

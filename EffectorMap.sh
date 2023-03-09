@@ -27,7 +27,6 @@
 gff_file=/home/jconnell/fusarium/gene_effector_interaction/AJ516/final_genes_appended_renamed.gff3
 deg=/home/jconnell/fusarium/gene_effector_interaction/AJ516/AJ516_l2fc.txt
 eff=/home/jconnell/fusarium/gene_effector_interaction/AJ516/F._oxysporum_f._sp._lactucae_AJ516.fna_CandidateEffector.gff
-strain=AJ516
 output_location=/home/jconnell/fusarium/gene_effector_interaction/AJ516 
 effectormap=/home/jconnell/git_repos/niab_repos/fusarium_oxysporum/effector_map_V2.py
 python $effectormap -gff $gff_file -deg $deg -eff $eff -out $output_location
